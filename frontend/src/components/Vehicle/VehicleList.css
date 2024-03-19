@@ -1,0 +1,14 @@
+/* VehicleList.css */
+.vehicle-list {
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.vehicle-list h2 {
+  color: #333;
+}
+
+.vehicle-list p {
+  margin-top: 20px;
+}
