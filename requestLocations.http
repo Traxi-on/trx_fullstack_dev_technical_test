@@ -1,0 +1,31 @@
+POST http://localhost:9000/api/locations HTTP/1.1
+Content-Type: application/json
+
+{
+    "vehicleId": "65fa9e2de269b6009997d1b5",
+    "currentLocation": {
+        "type": "Point",
+        "coordinates": [25.546641, -103.424197]
+    }
+}
+
+
+### GET ALL LOCATIONS ON TABLE
+GET http://localhost:9000/api/locations HTTP/1.1
+Content-Type: application/json
+
+
+###GET BY ID
+GET http://localhost:9000/api/locations/65fa7cce3b195238b8d71fc6 HTTP/1.1
+
+###
+PUT http://localhost:9000/api/locations/65fa7cce3b195238b8d71fc6 HTTP/1.1
+Content-Type: application/json
+
+{
+    "currentLocation": {
+        "type": "Point",
+        "coordinates": [-98.4842, 39.0119]
+    }
+}
+

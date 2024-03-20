@@ -1,0 +1,49 @@
+
+###
+POST http://localhost:9000/api/vehicles HTTP/1.1
+Content-Type: application/json
+
+    {
+    "plate": "asxasx1232",
+    "numero_economico": "12312312",
+    "vim": "231ecs23ad",
+    "type": "car",
+    "status": true,
+    "seats": 4,
+    "insurance": "Considine, Hirthe and Schmitt",
+    "insurance_number": "12321",
+    "brand": "CADILLAC",
+    "model": "Model x20",
+    "year": "2020",
+    "color": "White"
+    }
+
+### GET ALL
+GET http://localhost:9000/api/vehicles HTTP/1.1
+### GET BY TYPE AND STATUS
+GET http://localhost:9000/api/vehicles?tipo=automovil&status=false HTTP/1.1
+
+
+###GET BY ID
+GET http://localhost:9000/api/vehicles/65f65ec5e23fe10e034c9166 HTTP/1.1
+
+
+###UPDATE
+PUT http://localhost:9000/api/vehicles/65f65ec5e23fe10e034c9166 HTTP/1.1
+Content-Type: application/json
+
+ {
+      "placa": "1111",
+      "numero_economico": "32134214521",
+      "vim": "231ecsad123",
+      "asientos": 40,
+      "seguro": "Nuevo seguro",
+      "numero_seguro": "33333",
+      "marca": "Ford",
+      "modelo": "Fiesta",
+      "year": 2024,
+      "color": "Black"
+    }
+###DELETE
+DELETE http://localhost:9000/api/vehicles/65f65d07dda7b724f5cf60bf HTTP/1.1
+Content-Type: application/json
