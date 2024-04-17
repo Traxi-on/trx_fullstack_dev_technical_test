@@ -1,14 +1,17 @@
 const cors = require('cors');
 const express = require('express');
+const connectDB = require('./config/mongo/mongo');
 
 class Server {
   constructor() {
     this.config();
     this.middlewares();
     this.routes();
+    this.connectDB();
   }
 
   async connectDB() {
+    await connectDB();
   }
 
   middlewares() {
@@ -19,10 +22,13 @@ class Server {
   config() {
     this.app = express();
     this.port = process.env.PORT || 8080;
-
+    this.vehiclePath = '/api/vehicle';
+    ;
   }
 
   routes() {
+    this.app.use(this.vehiclePath, require('./routes/vehicle.routes'));
+
   }
 
   listen() {
