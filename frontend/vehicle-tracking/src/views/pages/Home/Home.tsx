@@ -4,14 +4,20 @@ import VehicleInterface from '../../../interfaces/vehicle.interface';
 import VehicleService from '../../../services/vehicleService/vehicleService';
 import { Dropdown } from 'react-bootstrap';
 import VehicleForm from '../../../components/VehicleForm/VehicleForm';
+import TrackingRouteService from '../../../services/routeTrackingService/trackingRouteService';
+import CoordinateInterface from '../../../interfaces/coordinateInterface';
+
+import { BsPinAngle } from 'react-icons/bs'; // Importamos el ícono de pin de mapa
 
 const Home: React.FC = () => {
     const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [vehicles, setVehicles] = useState<VehicleInterface[]>([]);
+    const [trackingRoutes, setTrackingRoutes] = useState<CoordinateInterface[]>([]);
 
     useEffect(() => {
         getVehicles();
+        getRoutes()
     }, []);
 
     const getVehicles = async () => {
@@ -19,8 +25,21 @@ const Home: React.FC = () => {
             setLoading(true);
             const vehiclesData = await VehicleService.getVehicles(page);
             setVehicles(vehiclesData.payload);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+            console.log(error);
+        }
+    }
+    const getRoutes = async () => {
+        try {
+            setLoading(true);
+            const trackingRoutesData = await TrackingRouteService.getRouteCoordinates();
+            setTrackingRoutes(trackingRoutesData);
+            setLoading(false);
         } catch (error) {
             console.log(error);
+            setLoading(false);
         }
     }
 
@@ -54,25 +73,44 @@ const Home: React.FC = () => {
                                         <Dropdown.Item key={index}>
                                             <div className="card mb-1">
                                                 <div className="card-body">
-                                                    <p className="card-text">Placa: {vehicle.placa}</p>
-                                                    <p className="card-text">Vehiculo: {vehicle.BRAND} - {vehicle.MODEL} - {vehicle.YEAR}</p>
+                                                    <p className="card-text">Placa: {vehicle.plate}</p>
+                                                    <p className="card-text">Vehiculo: {vehicle.brand} - {vehicle.model} - {vehicle.year}</p>
 
                                                 </div>
                                             </div>
                                         </Dropdown.Item>
                                     ))}
                                 </Dropdown.Menu>
+
                             </Dropdown>
-                            <li className="nav-item">
-                                <a className="nav-link" onClick={() => handleMenuItemClick('Rutas')}>Rutas</a>
-                            </li>
+                            <Dropdown>
+                                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                                    Rutas
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    {trackingRoutes.map((route, index) => (
+                                        <Dropdown.Item key={index}>
+                                            <div className="card mb-1">
+
+                                                <div className="card-body">
+
+                                                    <p className="card-text">
+                                                        <BsPinAngle className="me-2" />
+                                                        Longitud: {route.lng} - Latitud {route.lat}</p>
+                                                </div>
+                                            </div>
+                                        </Dropdown.Item>
+                                    ))}
+                                </Dropdown.Menu>
+                            </Dropdown>
+
 
                         </ul>
                     </div>
                 </div>
             </nav>
             <div className="header">
-                <TrackingMap />
+                <TrackingMap routeCoordinates={trackingRoutes} />
             </div>
         </div>
     );
