@@ -23,9 +23,9 @@ class VehicleRepository {
     async searchVehicles(filters) {
         const query = {};
 
-        if (filters.placa) query.placa = filters.placa;
-        if (filters.segure_number) query.segure_number = filters.segure_number;
-        if (filters.modelo) query.MODEL = filters.modelo;
+        if (filters.plate) query.plate = filters.plate;
+        if (filters.insurance_number) query.insurance_number = filters.insurance_number;
+        if (filters.model) query.MODEL = filters.model;
         if (filters.year) query.YEAR = filters.year;
         if (filters.brand) query.BRAND = filters.brand;
 

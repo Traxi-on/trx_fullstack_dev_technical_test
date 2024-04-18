@@ -30,11 +30,11 @@ class VehicleController {
     };
         searchVehicles = async (req, res) => {
 
-        const { placa, segure_number, modelo, year, brand } = req.query;
+        const { plate, insurance_number, model, year, brand } = req.query;
         const filters = {};
-        if (placa) filters.placa = placa;
-        if (segure_number) filters.segure_number = segure_number;
-        if (modelo) filters.modelo = modelo;
+        if (plate) filters.plate = plate;
+        if (insurance_number) filters.insurance_number = insurance_number;
+        if (model) filters.model = modelo;
         if (year) filters.year = year;
         if (brand) filters.brand = brand;
     
@@ -48,7 +48,9 @@ class VehicleController {
     createVehicle = async (req, res) => {
         const vehicleData = req.body;
         try {
+            console.log(vehicleData)
             const newVehicle = await this.repository.createVehicle(vehicleData);
+
             return res.status(201).json(new Response(false, "Vehicle created successfully", newVehicle));
         } catch (error) {
             return res.status(500).json(new Response(true, "Error creating vehicle", null, error.message));
