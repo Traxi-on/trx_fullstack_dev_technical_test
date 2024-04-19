@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "env-cmd -f ./envs/.env react-scripts start",
-    "build": "react-scripts build",
+    "build": "env-cmd -f ./envs/.env react-scripts build",
     "test": "env-cmd -f ./envs/.env react-scripts test --watchAll=false --coverage --coverageDirectory=coverage",
     "eject": "react-scripts eject",
     "lint": "eslint './src/**/*.{ts,tsx}'",
