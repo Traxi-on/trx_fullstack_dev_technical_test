@@ -5,7 +5,7 @@ import CoordinateInterface from '../../interfaces/coordinateInterface';
 import VehicleInterface, { VehicleResponseInterface } from '../../interfaces/vehicle.interface';
 import VehicleService from '../../services/vehicleService/vehicleService';
 import VehicleFormModal from '../VehicleForm/VehicleForm';
-import VehicleList from '../VehicleList/VehicleList'; // Importamos el nuevo componente VehicleList
+import VehicleList from '../VehicleList/VehicleList'; 
 
 interface NavbarProps {
     trackingRoutes: CoordinateInterface[];
