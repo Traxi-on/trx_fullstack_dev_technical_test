@@ -1,29 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { BsPlus   } from 'react-icons/bs';
-import { FaPlus } from "react-icons/fa6";
+import VehicleService from '../../services/vehicleService/vehicleService';
+import VehicleInterface from '../../interfaces/vehicle.interface';
 
-const CreateVehicleModal: React.FC = () => {
-    const [showModal, setShowModal] = useState(false);
-    const [formData, setFormData] = useState({
-        placa: '',
-        numero_economico: '',
-        vim: '',
-        asientos: 0,
-        seguro: '',
-        segure_number: '',
-        BRAND: '',
-        MODEL: '',
-        YEAR: 0,
-        COLOR: ''
+interface VehicleFormModalProps {
+    getVehicles: () => void;
+    closeModal: () => void;
+    vehicleToUpdate?: VehicleInterface;
+    showModalForm: boolean
+}
+
+const VehicleFormModal: React.FC<VehicleFormModalProps> = ({ getVehicles, vehicleToUpdate, closeModal,
+    showModalForm }) => {
+    const [showModal, setShowModal] = useState(showModalForm);
+    const [formData, setFormData] = useState<VehicleInterface>({
+        plate: '',
+        economic_number: '',
+        vin: '',
+        seats: 0,
+        insurance: '',
+        insurance_number: '',
+        brand: '',
+        model: '',
+        year: 0,
+        color: '',
     });
 
-    const handleCreateVehicleClick = () => {
-        setShowModal(true);
-    }
+    useEffect(() => {
+        if (vehicleToUpdate) {
+            setFormData(vehicleToUpdate);
+        }
+    }, [vehicleToUpdate]);
+
+
 
     const handleCloseModal = () => {
         setShowModal(false);
+        closeModal()
+
     }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,76 +48,81 @@ const CreateVehicleModal: React.FC = () => {
         });
     }
 
-    const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        // Aquí puedes realizar validaciones adicionales según tus necesidades
-
-        // Lógica para enviar el formulario
-        console.log("Formulario enviado", formData);
-        // Cerrar el modal después de enviar el formulario
-        handleCloseModal();
+    const handleFormSubmit = async () => {
+        try {
+            console.log("Formulario enviado", formData);
+            let isError;
+            if (vehicleToUpdate) {
+                isError = await VehicleService.updateVehicle(formData);
+            } else {
+                isError = await VehicleService.createVehicle(formData);
+            }
+            if (!isError) {
+                handleCloseModal();
+                getVehicles();
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
-        <>
-             <a className="nav-link" onClick={handleCreateVehicleClick}>
-                Crear Vehiculo
-            </a>
+        <React.Fragment>
+            
             <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Crear Vehículo</Modal.Title>
+                    <Modal.Title>{vehicleToUpdate ? 'Actualizar Vehículo' : 'Crear Vehículo'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body style={{ maxHeight: '60vh', overflowY: 'auto' }}>
                     <Form onSubmit={handleFormSubmit}>
                         <Form.Group className="mb-3" controlId="formPlaca">
                             <Form.Label>Placa</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese la placa" name="placa" value={formData.placa} onChange={handleInputChange} required />
+                            <Form.Control type="text" placeholder="Ingrese la placa" name="plate" value={formData.plate} onChange={handleInputChange} required />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formNumeroEconomico">
                             <Form.Label>Número Económico</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese el número económico" name="numero_economico" value={formData.numero_economico} onChange={handleInputChange} required />
+                            <Form.Control type="text" placeholder="Ingrese el número económico" name="economic_number" value={formData.economic_number} onChange={handleInputChange} required />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formVIM">
                             <Form.Label>VIM</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese el VIM" name="vim" value={formData.vim} onChange={handleInputChange} required />
+                            <Form.Control type="text" placeholder="Ingrese el VIM" name="vin" value={formData.vin} onChange={handleInputChange} required />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formAsientos">
                             <Form.Label>Asientos</Form.Label>
-                            <Form.Control type="number" placeholder="Ingrese el número de asientos" name="asientos" value={formData.asientos.toString()} onChange={handleInputChange} required />
+                            <Form.Control type="number" placeholder="Ingrese el número de asientos" name="seats" value={formData.seats.toString()} onChange={handleInputChange} required />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formSeguro">
                             <Form.Label>Seguro</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese el seguro" name="seguro" value={formData.seguro} onChange={handleInputChange} required />
+                            <Form.Control type="text" placeholder="Ingrese el seguro" name="insurance" value={formData.insurance} onChange={handleInputChange} required />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formSegureNumber">
                             <Form.Label>Número de Seguro</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese el número de seguro" name="segure_number" value={formData.segure_number} onChange={handleInputChange} required />
+                            <Form.Control type="text" placeholder="Ingrese el número de seguro" name="insurance_number" value={formData.insurance_number} onChange={handleInputChange} required />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBrand">
                             <Form.Label>Marca</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese la marca" name="BRAND" value={formData.BRAND} onChange={handleInputChange} required />
+                            <Form.Control type="text" placeholder="Ingrese la marca" name="brand" value={formData.brand} onChange={handleInputChange} required />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formModel">
                             <Form.Label>Modelo</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese el modelo" name="MODEL" value={formData.MODEL} onChange={handleInputChange} required />
+                            <Form.Control type="text" placeholder="Ingrese el modelo" name="model" value={formData.model} onChange={handleInputChange} required />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formYear">
                             <Form.Label>Año</Form.Label>
-                            <Form.Control type="number" placeholder="Ingrese el año" name="YEAR" value={formData.YEAR.toString()} onChange={handleInputChange} required />
+                            <Form.Control type="number" placeholder="Ingrese el año" name="year" value={formData.year.toString()} onChange={handleInputChange} required />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formColor">
                             <Form.Label>Color</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese el color" name="COLOR" value={formData.COLOR} onChange={handleInputChange} required />
+                            <Form.Control type="text" placeholder="Ingrese el color" name="color" value={formData.color} onChange={handleInputChange} required />
                         </Form.Group>
-                        {/* Agrega más campos de formulario según sea necesario */}
                         <Button variant="primary" type="submit">
                             Guardar
                         </Button>
                     </Form>
                 </Modal.Body>
             </Modal>
-        </>
+        </React.Fragment>
     );
 }
 
-export default CreateVehicleModal;
+export default VehicleFormModal;

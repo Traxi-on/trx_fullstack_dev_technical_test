@@ -28,7 +28,7 @@ const exampleRouteData = {
   ]
 };
 
-class RouteCoordinatesService {
+export class RouteCoordinatesService {
   async getRouteCoordinates(): Promise<CoordinateInterface[]> {
     try {
       // Obtener la ruta del ejemplo desde los datos estáticos

@@ -15,4 +15,14 @@ export class HttpService {
     const response = await client.post<ApiResponse<T>>(url, data, config);
     return response.data; 
   }
+
+  public static async put<T>(url: string, data: any, config: AxiosRequestConfig, mock: any): Promise<ApiResponse<T>> {
+    const response = await client.put<ApiResponse<T>>(url, data, config);
+    return response.data; 
+  }
+
+  public static async delete<T>(url: string,  mock: any): Promise<ApiResponse<T>> {
+    const response = await client.delete<ApiResponse<T>>(url);
+    return response.data; 
+  }
 }
