@@ -25,10 +25,9 @@ class VehicleRepository {
 
         if (filters.plate) query.plate = filters.plate;
         if (filters.insurance_number) query.insurance_number = filters.insurance_number;
-        if (filters.model) query.MODEL = filters.model;
-        if (filters.year) query.YEAR = filters.year;
-        if (filters.brand) query.BRAND = filters.brand;
-
+        if (filters.model) query.model = filters.model;
+        if (filters.year) query.year = filters.year;
+        if (filters.brand) query.brand = filters.brand;
         return await Vehicle.find(query);
     }
 

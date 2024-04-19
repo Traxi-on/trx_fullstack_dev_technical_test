@@ -28,16 +28,15 @@ class VehicleController {
             return res.status(500).json(new Response(true, "Error fetching vehicle", null, error.message));
         }
     };
-        searchVehicles = async (req, res) => {
+    searchVehicles = async (req, res) => {
 
         const { plate, insurance_number, model, year, brand } = req.query;
         const filters = {};
         if (plate) filters.plate = plate;
         if (insurance_number) filters.insurance_number = insurance_number;
-        if (model) filters.model = modelo;
+        if (model) filters.model = model;
         if (year) filters.year = year;
         if (brand) filters.brand = brand;
-    
         try {
             const vehicles = await this.repository.searchVehicles(filters);
             return res.status(200).json(new Response(false, "Search results", vehicles));
@@ -48,7 +47,6 @@ class VehicleController {
     createVehicle = async (req, res) => {
         const vehicleData = req.body;
         try {
-            console.log(vehicleData)
             const newVehicle = await this.repository.createVehicle(vehicleData);
 
             return res.status(201).json(new Response(false, "Vehicle created successfully", newVehicle));
