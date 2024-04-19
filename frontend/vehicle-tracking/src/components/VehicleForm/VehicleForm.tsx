@@ -67,11 +67,11 @@ const VehicleFormModal: React.FC<VehicleFormModalProps> = ({ getVehicles, vehicl
     }
 
     return (
-        <React.Fragment>
-            
-            <Modal show={showModal} onHide={handleCloseModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{vehicleToUpdate ? 'Actualizar Vehículo' : 'Crear Vehículo'}</Modal.Title>
+        <React.Fragment >
+
+            <Modal show={showModal} onHide={handleCloseModal} centered >
+                <Modal.Header className='text-white bg-dark' >
+                    <Modal.Title  >{vehicleToUpdate ? 'Actualizar Vehículo' : 'Crear Vehículo'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body style={{ maxHeight: '60vh', overflowY: 'auto' }}>
                     <Form onSubmit={handleFormSubmit}>
@@ -89,7 +89,7 @@ const VehicleFormModal: React.FC<VehicleFormModalProps> = ({ getVehicles, vehicl
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formAsientos">
                             <Form.Label>Asientos</Form.Label>
-                            <Form.Control type="number" placeholder="Ingrese el número de asientos" name="seats" value={formData.seats.toString()} onChange={handleInputChange} required />
+                            <Form.Control type="number" min={1} placeholder="Ingrese el número de asientos" name="seats" value={formData.seats.toString()} onChange={handleInputChange} required />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formSeguro">
                             <Form.Label>Seguro</Form.Label>
@@ -109,13 +109,13 @@ const VehicleFormModal: React.FC<VehicleFormModalProps> = ({ getVehicles, vehicl
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formYear">
                             <Form.Label>Año</Form.Label>
-                            <Form.Control type="number" placeholder="Ingrese el año" name="year" value={formData.year.toString()} onChange={handleInputChange} required />
+                            <Form.Control type="number" min={1900} placeholder="Ingrese el año" name="year" value={formData.year.toString()} onChange={handleInputChange} required />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formColor">
                             <Form.Label>Color</Form.Label>
                             <Form.Control type="text" placeholder="Ingrese el color" name="color" value={formData.color} onChange={handleInputChange} required />
                         </Form.Group>
-                        <Button variant="primary" type="submit">
+                        <Button variant="dark" type="submit">
                             Guardar
                         </Button>
                     </Form>

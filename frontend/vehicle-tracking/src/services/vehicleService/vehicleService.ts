@@ -14,6 +14,14 @@ export class VehicleService {
 
     return response as unknown as ApiResponse<VehicleResponseInterface>;
   }
+  async searchVehicles(params: Record<string, string>,): Promise<ApiResponse<VehicleResponseInterface>> {
+    const queryParams = new URLSearchParams(params).toString();
+    const url = `${this.baseUrl}vehicle/search/?${queryParams}`;
+    const response = await HttpService.get<ApiResponse<VehicleInterface[]>>(url, {}, VEHICLE_RESPONSE_MOCK);
+
+    return response as unknown as ApiResponse<VehicleResponseInterface>;
+  }
+
 
   async createVehicle(data: VehicleInterface): Promise<boolean> {
     const url = `${this.baseUrl}vehicle`;

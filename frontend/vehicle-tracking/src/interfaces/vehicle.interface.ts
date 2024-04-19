@@ -17,7 +17,7 @@ export default VehicleInterface;
 
 export interface VehicleResponseInterface {
     vehicles: VehicleInterface[];
-    totalPages: number;
-    currentPage: number;
-    totalDocuments: number;
+    totalPages?: number ;
+    currentPage?: number;
+    totalDocuments?: number;
 }

@@ -28,12 +28,14 @@ class VehicleRepository {
         if (filters.model) query.model = filters.model;
         if (filters.year) query.year = filters.year;
         if (filters.brand) query.brand = filters.brand;
-        return await Vehicle.find(query);
+        const vehicles =  await Vehicle.find(query);
+        return {
+            vehicles,
+            
+        };
     }
 
-    async getVehicleById(vehicleId) {
-        return await Vehicle.findById(vehicleId);
-    }
+    
 
     async createVehicle(vehicleData) {
         return await Vehicle.create(vehicleData);

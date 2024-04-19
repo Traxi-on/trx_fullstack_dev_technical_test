@@ -16,18 +16,7 @@ class VehicleController {
         }
     };
 
-    getVehicleById = async (req, res) => {
-        const vehicleId = req.params.id;
-        try {
-            const vehicle = await this.repository.getVehicleById(vehicleId);
-            if (!vehicle) {
-                return res.status(404).json(new Response(true, "Vehicle not found"));
-            }
-            return res.status(200).json(new Response(false, "Vehicle details", vehicle));
-        } catch (error) {
-            return res.status(500).json(new Response(true, "Error fetching vehicle", null, error.message));
-        }
-    };
+   
     searchVehicles = async (req, res) => {
 
         const { plate, insurance_number, model, year, brand } = req.query;
