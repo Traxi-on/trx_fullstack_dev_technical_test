@@ -1,6 +1,5 @@
 import CoordinateInterface from "../../interfaces/coordinateInterface";
 
-// Definir los datos del GeoJSON
 const exampleRouteData = {
   "type": "FeatureCollection",
   "features": [
@@ -31,10 +30,8 @@ const exampleRouteData = {
 export class RouteCoordinatesService {
   async getRouteCoordinates(): Promise<CoordinateInterface[]> {
     try {
-      // Obtener la ruta del ejemplo desde los datos estáticos
       const exampleRoute = exampleRouteData;
 
-      // Procesar los datos para obtener las coordenadas
       const coordinates: CoordinateInterface[] = exampleRoute.features[0].geometry.coordinates.map((coordinate: number[]) => ({
         lat: coordinate[1],
         lng: coordinate[0]

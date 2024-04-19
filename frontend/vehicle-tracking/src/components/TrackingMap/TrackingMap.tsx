@@ -10,7 +10,7 @@ interface TrackingMapProps {
 const TrackingMap: React.FC<TrackingMapProps> = ({ routeCoordinates }) => {
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: 'AIzaSyBJr2KmpYenq2HA4OsQ_eNPP94vrzyJJjo'
+        googleMapsApiKey: process.env.API_KEY_GOOGLE ?? ''
     });
     const middleIndex = Math.floor(routeCoordinates.length / 2);
 
