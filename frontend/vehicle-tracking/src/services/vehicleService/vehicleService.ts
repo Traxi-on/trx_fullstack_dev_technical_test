@@ -10,6 +10,7 @@ export class VehicleService {
 
   async getVehicles(page: number = 1): Promise<ApiResponse<VehicleResponseInterface>> {
     const url = `${this.baseUrl}vehicle/?page=${page}`;
+
     const response = await HttpService.get<ApiResponse<VehicleInterface[]>>(url, {}, VEHICLE_RESPONSE_MOCK);
 
     return response as unknown as ApiResponse<VehicleResponseInterface>;

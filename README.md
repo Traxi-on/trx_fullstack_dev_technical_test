@@ -61,7 +61,7 @@ Create a .env file located at ./envs/.env with the following configurations:
 ```bash
 REACT_APP_API_URL=URL_API
 REACT_APP_USE_MOCKS=false
-API_KEY_GOOGLE= API_KEY
+REACT_APP_API_KEY_GOOGLE= API_KEY
 ```
 
 Start the app
