@@ -78,3 +78,14 @@ To run tests, run the following command
   npm run test
 ```
 
+
+## Demo
+
+https://feature-vehicle-tracking--shiny-panda-6aa784.netlify.app/#
+
+
+## Demo API
+
+https://trx-fullstack-dev-technical-test-uizb.onrender.com/api/vehicle
+
+
