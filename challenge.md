@@ -45,7 +45,7 @@ Summary: Create a web application that displays a map as the main section with r
 
 - Method: GET
 - Authorization: None
-- Endpoint: [get route detail](https://iorm9noapi.execute-api.us-east-1.amazonaws.com/challenge/route/dummy1)
+- Endpoint: [get route detail](https://kqucimdmhx7des4gwnz6enfq4y0eglsf.lambda-url.us-east-1.on.aws/)
 - Refer to [route example](assets/exampleRoute.geojson) to see what to expect
 
 ## Wireframe (low level) of the possible result
