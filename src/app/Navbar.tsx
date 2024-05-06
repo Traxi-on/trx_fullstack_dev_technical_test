@@ -8,16 +8,14 @@ import Image from 'next/image'
 function Navbar() {
     return (
         <AppBar position="fixed" sx={{ bgcolor: "white", padding: '10px' }}>
-            <Container maxWidth="xl">
-                <Toolbar disableGutters>
-                    <Image
-                        src="/img/logotipo_traxion.svg"
-                        width={140}
-                        height={200}
-                        alt="Picture of the author"
-                    />
-                </Toolbar>
-            </Container>
+            <Toolbar disableGutters sx={{ paddingLeft: '1em' }}>
+                <Image
+                    src="/img/logotipo_traxion.svg"
+                    width={140}
+                    height={200}
+                    alt="Picture of the author"
+                />
+            </Toolbar>
         </AppBar>
     );
 }

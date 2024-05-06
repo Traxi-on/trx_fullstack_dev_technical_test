@@ -61,7 +61,7 @@ function Map() {
         path={lineArray}
         options={{
           strokeColor: "#D0DF00",
-          strokeWeight: 2
+          strokeWeight: 4
         }}
       />
       { vehicle &&

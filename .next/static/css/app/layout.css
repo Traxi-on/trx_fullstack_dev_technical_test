@@ -602,6 +602,9 @@ video {
 .fixed {
   position: fixed;
 }
+.flex {
+  display: flex;
+}
 .table {
   display: table;
 }
