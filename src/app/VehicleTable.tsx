@@ -7,51 +7,65 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { createMuiTheme, makeStyles } from '@mui/material';
+import vehicles from './../../public/assets/carMock.json';
+import EventBus from './EventBus';
 
 function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
+  plate: string,
+  eco_number: string,
+  vim: string,
+  seats: number,
+  sec: string,
+  sec_number: string,
+  brand: string,
+  model: string,
+  year: number,
+  color: string 
 ) {
-  return { name, calories, fat, carbs, protein };
+  return { plate, eco_number, vim, seats, sec, sec_number, brand, model, year, color };
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+const rows = vehicles;
 
 export default function VehicleTable() {
+  const setVehicle = (vehicle: any) => {
+    EventBus.dispatch("couponApply", { vehicle });
+  }
+
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableContainer component={Paper} sx={{ width: '100%', height: '600px', margin: 'auto' }}>
+      <Table aria-label="simple table">
         <TableHead>
           <TableRow sx={{ backgroundColor: '#D0DF00 !important', fontWeight: 'bold' }}>
-            <TableCell className='bold'>Dessert (100g serving)</TableCell>
-            <TableCell className='bold' align="right">Calories</TableCell>
-            <TableCell className='bold' align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell className='bold' align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell className='bold' align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell className='bold'>Placa</TableCell>
+            <TableCell className='bold' align="left">Número económico</TableCell>
+            <TableCell className='bold' align="left">Vim</TableCell>
+            <TableCell className='bold' align="left">Asientos</TableCell>
+            <TableCell className='bold' align="left">Seguro</TableCell>
+            <TableCell className='bold' align="left">No. Seguro</TableCell>
+            <TableCell className='bold' align="left">Marca</TableCell>
+            <TableCell className='bold' align="left">Modelo</TableCell>
+            <TableCell className='bold' align="left">Año</TableCell>
+            <TableCell className='bold' align="left">Color</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.map((row, index) => (
             <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              key={index}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 }, cursor: 'pointer' }}
+              onClick={() => setVehicle(row)}
             >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell>{row.plate}</TableCell>
+              <TableCell align="center">{row.eco_number}</TableCell>
+              <TableCell align="center">{row.vim}</TableCell>
+              <TableCell align="center">{row.seats}</TableCell>
+              <TableCell align="center">{row.sec}</TableCell>
+              <TableCell align="center">{row.sec_number}</TableCell>
+              <TableCell align="center">{row.brand}</TableCell>
+              <TableCell align="center">{row.model}</TableCell>
+              <TableCell align="center">{row.year}</TableCell>
+              <TableCell align="center">{row.color}</TableCell>
             </TableRow>
           ))}
         </TableBody>
