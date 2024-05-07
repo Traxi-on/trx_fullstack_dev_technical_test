@@ -23,7 +23,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 export default function VehicleTable() {
   let [vehicles, setVehicles] = React.useState([]);
-
+  let [filterVehicles, setFilterVehicles] = React.useState([]);
   // Function to fetch data using Axios
   const fetchData = async () => {
     try {
@@ -32,6 +32,7 @@ export default function VehicleTable() {
         .then(function (response) {
           console.log(response);
           setVehicles(response.data);
+          setFilterVehicles(response.data)
         })
         .catch(function (error) {
           console.log(error);
@@ -65,7 +66,6 @@ export default function VehicleTable() {
       console.error("Error fetching data:", error);
     }
   };
-
 
   const updateVehicle = async (row: any) => {
     EventBus.dispatch("updateVehicle", { row });
@@ -104,6 +104,19 @@ export default function VehicleTable() {
           variant="outlined"
           sx={{ width: "25%" }}
           size="small"
+          onChange={(e) => {
+            const search = e.target.value;
+            if (search !== "") {
+              const updatedList = filterVehicles.filter((vehicle: any) => {
+                return Object.keys(vehicle).some(
+                  (key: any) => vehicle[key].toString().search(search) !== -1
+                );
+              });
+              setVehicles(updatedList);
+            } else {
+              setVehicles(filterVehicles);
+            }
+          }}
         />
         <VehicleDialog></VehicleDialog>
       </div>
@@ -203,4 +216,3 @@ export default function VehicleTable() {
     </>
   );
 }
-
