@@ -8,6 +8,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Grid } from '@mui/material';
 import { useForm } from "react-hook-form";
+import axios from 'axios';
+axios.defaults.baseURL = 'http://localhost:3001';
 
 export default function VehicleDialog() {
     const [open, setOpen] = React.useState(false);
@@ -19,9 +21,17 @@ export default function VehicleDialog() {
     } = useForm();
 
     const onSubmit = (data: any) => {
-        console.log(data);
-        reset();
-        handleClose();
+        console.log("data", data);
+        // call create vehicle api
+        axios.post('/vehicles', data)
+            .then(function (response) {
+                console.log(response);
+                reset();
+                handleClose();
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     };
 
     const handleClickOpen = () => {
@@ -30,6 +40,7 @@ export default function VehicleDialog() {
 
     const handleClose = () => {
         setOpen(false);
+        reset();
     };
 
     return (
@@ -52,13 +63,19 @@ export default function VehicleDialog() {
                                             autoFocus
                                             required
                                             margin="dense"
-                                            {...register("plate")}
+                                            {...register("plate", {
+                                                required: true
+                                            })}
                                             name="plate"
                                             label="Placa"
                                             fullWidth
                                             variant="outlined"
                                             size='small'
+                                            error={errors.plate && errors.plate.type === "required"}
                                         />
+                                        {errors.plate && errors.plate.type === "required" && (
+                                            <p className="errorMsg">Placa es requerida</p>
+                                        )}
                                     </div>
                                 </Grid>
                                 <Grid item xs={4}>
@@ -66,13 +83,19 @@ export default function VehicleDialog() {
                                         <TextField
                                             required
                                             margin="dense"
-                                            {...register("eco_number")}
+                                            {...register("eco_number", {
+                                                required: true
+                                            })}
                                             name="eco_number"
                                             label="Número económico"
                                             fullWidth
                                             variant="outlined"
                                             size='small'
+                                            error={errors.eco_number && errors.eco_number.type === "required"}
                                         />
+                                        {errors.eco_number && errors.eco_number.type === "required" && (
+                                            <p className="errorMsg">Núm. económico es requerida</p>
+                                        )}
                                     </div>
                                 </Grid>
                                 <Grid item xs={4}>
@@ -80,13 +103,19 @@ export default function VehicleDialog() {
                                         <TextField
                                             required
                                             margin="dense"
-                                            {...register("vim")}
+                                            {...register("vim", {
+                                                required: true
+                                            })}
                                             name="vim"
                                             label="Vim"
                                             fullWidth
                                             variant="outlined"
                                             size='small'
+                                            error={errors.vim && errors.vim.type === "required"}
                                         />
+                                        {errors.vim && errors.vim.type === "required" && (
+                                            <p className="errorMsg">Vim es requerida</p>
+                                        )}
                                     </div>
                                 </Grid>
                             </Grid>
@@ -96,13 +125,19 @@ export default function VehicleDialog() {
                                         <TextField
                                             required
                                             margin="dense"
-                                            {...register("seats")}
+                                            {...register("seats", {
+                                                required: true
+                                            })}
                                             name="seats"
                                             label="Asientos"
                                             fullWidth
                                             variant="outlined"
                                             size='small'
+                                            error={errors.seats && errors.seats.type === "required"}
                                         />
+                                        {errors.seats && errors.seats.type === "required" && (
+                                            <p className="errorMsg">Asientos es requerido</p>
+                                        )}
                                     </div>
                                 </Grid>
                                 <Grid item xs={4}>
@@ -110,13 +145,19 @@ export default function VehicleDialog() {
                                         <TextField
                                             required
                                             margin="dense"
-                                            {...register("sec")}
+                                            {...register("sec", {
+                                                required: true
+                                            })}
                                             name="sec"
                                             label="Seguro"
                                             fullWidth
                                             variant="outlined"
                                             size='small'
+                                            error={errors.sec && errors.sec.type === "required"}
                                         />
+                                        {errors.sec && errors.sec.type === "required" && (
+                                            <p className="errorMsg">Seguro es requerido</p>
+                                        )}
                                     </div>
                                 </Grid>
                                 <Grid item xs={4}>
@@ -124,13 +165,19 @@ export default function VehicleDialog() {
                                         <TextField
                                             required
                                             margin="dense"
-                                            {...register("sec_number")}
+                                            {...register("sec_number", {
+                                                required: true
+                                            })}
                                             name="sec_number"
                                             label="Número de seguro"
                                             fullWidth
                                             variant="outlined"
                                             size='small'
+                                            error={errors.sec_number && errors.sec_number.type === "required"}
                                         />
+                                        {errors.sec_number && errors.sec_number.type === "required" && (
+                                            <p className="errorMsg">Núm. de Seg. es requerido</p>
+                                        )}
                                     </div>
                                 </Grid>
                             </Grid>
@@ -140,13 +187,19 @@ export default function VehicleDialog() {
                                         <TextField
                                             required
                                             margin="dense"
-                                            {...register("brand")}
+                                            {...register("brand", {
+                                                required: true
+                                            })}
                                             name="brand"
                                             label="Marca"
                                             fullWidth
                                             variant="outlined"
                                             size='small'
+                                            error={errors.brand && errors.brand.type === "required"}
                                         />
+                                        {errors.brand && errors.brand.type === "required" && (
+                                            <p className="errorMsg">Marca es requerida</p>
+                                        )}
                                     </div>
 
                                 </Grid>
@@ -155,13 +208,19 @@ export default function VehicleDialog() {
                                         <TextField
                                             required
                                             margin="dense"
-                                            {...register("model")}
+                                            {...register("model", {
+                                                required: true
+                                            })}
                                             name="model"
                                             label="Modelo"
                                             fullWidth
                                             variant="outlined"
                                             size='small'
+                                            error={errors.model && errors.model.type === "required"}
                                         />
+                                        {errors.model && errors.model.type === "required" && (
+                                            <p className="errorMsg">Modelo es requerido</p>
+                                        )}
                                     </div>
                                 </Grid>
                                 <Grid item xs={4}>
@@ -169,13 +228,19 @@ export default function VehicleDialog() {
                                         <TextField
                                             required
                                             margin="dense"
-                                            {...register("year")}
+                                            {...register("year", {
+                                                required: true
+                                            })}
                                             name="year"
                                             label="Año"
                                             fullWidth
                                             variant="outlined"
                                             size='small'
+                                            error={errors.year && errors.year.type === "required"}
                                         />
+                                        {errors.year && errors.year.type === "required" && (
+                                            <p className="errorMsg">Año es requerido</p>
+                                        )}
                                     </div>
                                 </Grid>
                             </Grid>
@@ -185,13 +250,19 @@ export default function VehicleDialog() {
                                         <TextField
                                             required
                                             margin="dense"
-                                            {...register("color")}
+                                            {...register("color", {
+                                                required: true
+                                            })}
                                             name="color"
                                             label="Color"
                                             fullWidth
                                             variant="outlined"
                                             size='small'
+                                            error={errors.color && errors.color.type === "required"}
                                         />
+                                        {errors.color && errors.color.type === "required" && (
+                                            <p className="errorMsg">Color es requerido</p>
+                                        )}
                                     </div>
                                 </Grid>
                                 <Grid item xs={4}>
@@ -199,13 +270,19 @@ export default function VehicleDialog() {
                                         <TextField
                                             required
                                             margin="dense"
-                                            {...register("lng")}
+                                            {...register("lng", {
+                                                required: true
+                                            })}
                                             name="lng"
                                             label="Longitud"
                                             fullWidth
                                             variant="outlined"
                                             size='small'
+                                            error={errors.lng && errors.lng.type === "required"}
                                         />
+                                        {errors.lng && errors.lng.type === "required" && (
+                                            <p className="errorMsg">Longitud es requerida</p>
+                                        )}
                                     </div>
                                 </Grid>
                                 <Grid item xs={4}>
@@ -214,13 +291,19 @@ export default function VehicleDialog() {
                                         <TextField
                                             required
                                             margin="dense"
-                                            {...register("lat")}
+                                            {...register("lat", {
+                                                required: true
+                                            })}
                                             name="lat"
                                             label="Latitud"
                                             fullWidth
                                             variant="outlined"
                                             size='small'
+                                            error={errors.lat && errors.lat.type === "required"}
                                         />
+                                        {errors.lat && errors.lat.type === "required" && (
+                                            <p className="errorMsg">Latitud es requerida</p>
+                                        )}
                                     </div>
                                 </Grid>
                             </Grid>

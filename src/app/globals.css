@@ -35,3 +35,8 @@ body {
 .bold {
   font-weight: 500;
 }
+
+.errorMsg {
+  color: #d73a49;
+  font-size: 12px;
+}
