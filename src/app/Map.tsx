@@ -1,53 +1,57 @@
-import React, { useEffect, useState } from 'react'
-import { GoogleMap, Marker, Polyline, useJsApiLoader } from '@react-google-maps/api';
-import route from '../../public/assets/exampleRoute.json'
-import EventBus from './EventBus';
+import React, { useEffect, useState } from "react";
+import {
+  GoogleMap,
+  Marker,
+  Polyline,
+  useJsApiLoader,
+} from "@react-google-maps/api";
+import route from "../../public/assets/exampleRoute.json";
+import EventBus from "./EventBus";
 
 const containerStyle = {
-  height: '600px',
-  width: '100%',
-  margin: 'auto',
-  marginBottom: '1em'
+  height: "600px",
+  width: "100%",
+  margin: "auto",
+  marginBottom: "1em",
 };
 
 const center = {
   lng: -99.14435051803017,
-  lat: 19.407284909983332
+  lat: 19.407284909983332,
 };
 
 function Map() {
-  const [vehicle, setVehicle]: any = useState(null)
+  const [vehicle, setVehicle]: any = useState(null);
 
   useEffect(() => {
     EventBus.on("couponApply", (data: any) => {
       setVehicle(data.vehicle);
     });
-  }, [])
-
+  }, []);
 
   const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script', 
-    googleMapsApiKey: "AIzaSyBcz5xnXpAK4nVaZ1ElWQcO7ZCS2cl2FLw"
-  })
+    id: "google-map-script",
+    googleMapsApiKey: "AIzaSyBcz5xnXpAK4nVaZ1ElWQcO7ZCS2cl2FLw",
+  });
 
-  const lineArray: any[] = []
+  const lineArray: any[] = [];
   route.features[0].geometry.coordinates.map((coord, index) => {
-    lineArray.push({ lat: coord[1], lng: coord[0] })
-  })
+    lineArray.push({ lat: coord[1], lng: coord[0] });
+  });
 
-  const [map, setMap] = React.useState(null)
+  const [map, setMap] = React.useState(null);
 
-  const onLoad = React.useCallback(function callback(map) {
+  const onLoad = React.useCallback(function callback(map: any) {
     // This is just an example of getting and using the map instance!!! don't just blindly copy!
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
 
-    setMap(map)
-  }, [])
+    setMap(map);
+  }, []);
 
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null)
-  }, [])
+  const onUnmount = React.useCallback(function callback(map: any) {
+    setMap(null);
+  }, []);
 
   return isLoaded ? (
     <GoogleMap
@@ -61,20 +65,25 @@ function Map() {
         path={lineArray}
         options={{
           strokeColor: "#D0DF00",
-          strokeWeight: 4
+          strokeWeight: 4,
         }}
       />
-      { vehicle &&
-        <Marker position={{ lng: vehicle.lng, lat: vehicle.lat }} options={{
-          icon: {
-            url: '/img/truck.png',
-            scaledSize: new google.maps.Size(30, 20),
-            fillColor: 'red'
-          }
-        }}/>
-      }
+      {vehicle && (
+        <Marker
+          position={{ lng: vehicle.lng, lat: vehicle.lat }}
+          options={{
+            icon: {
+              url: "/img/truck.png",
+              scaledSize: new google.maps.Size(30, 20),
+              fillColor: "red",
+            },
+          }}
+        />
+      )}
     </GoogleMap>
-  ) : <></>
+  ) : (
+    <></>
+  );
 }
 
-export default React.memo(Map)
+export default React.memo(Map);

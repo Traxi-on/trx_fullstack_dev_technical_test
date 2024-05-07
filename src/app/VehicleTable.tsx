@@ -17,9 +17,9 @@ import EventBus from "./EventBus";
 import VehicleDialog from "./VehicleDialog";
 import axios from "axios";
 axios.defaults.baseURL = "http://localhost:3001";
-import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import { AccessAlarm, ThreeDRotation } from "@mui/icons-material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 export default function VehicleTable() {
   let [vehicles, setVehicles] = React.useState([]);
@@ -56,7 +56,7 @@ export default function VehicleTable() {
         .delete("/vehicles/" + row._id)
         .then(function (response) {
           console.log(response);
-          setVehicles(vehicles.filter((post:any) => post._id !== row._id));
+          setVehicles(vehicles.filter((post: any) => post._id !== row._id));
         })
         .catch(function (error) {
           console.log(error);
@@ -64,6 +64,11 @@ export default function VehicleTable() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+
+
+  const updateVehicle = async (row: any) => {
+    EventBus.dispatch("updateVehicle", { row });
   };
 
   const setVehicle = (vehicle: any) => {
@@ -165,11 +170,11 @@ export default function VehicleTable() {
                 }}
                 onClick={() => setVehicle(row)}
               >
-                <TableCell>
-                <DeleteIcon onClick={() => removeVehicle(row)}/>
+                <TableCell onClick={() => removeVehicle(row)}>
+                  <DeleteIcon />
                 </TableCell>
-                <TableCell>
-                <EditIcon onClick={() => removeVehicle(row)}/>
+                <TableCell onClick={() => updateVehicle(row)}>
+                  <EditIcon />
                 </TableCell>
                 <TableCell>{row.plate}</TableCell>
                 <TableCell align="center">{row.eco_number}</TableCell>
@@ -198,3 +203,4 @@ export default function VehicleTable() {
     </>
   );
 }
+
