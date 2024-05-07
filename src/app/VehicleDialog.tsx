@@ -9,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Grid } from '@mui/material';
 import { useForm } from "react-hook-form";
 import axios from 'axios';
+import EventBus from './EventBus';
 axios.defaults.baseURL = 'http://localhost:3001';
 
 export default function VehicleDialog() {
@@ -35,11 +36,11 @@ export default function VehicleDialog() {
     };
 
     const handleClickOpen = () => {
-
         setOpen(true);
     };
 
     const handleClose = () => {
+        EventBus.dispatch("getVehicles", { close: true });
         setOpen(false);
         reset();
     };

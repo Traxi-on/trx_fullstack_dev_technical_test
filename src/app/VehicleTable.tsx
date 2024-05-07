@@ -17,32 +17,9 @@ import EventBus from "./EventBus";
 import VehicleDialog from "./VehicleDialog";
 import axios from "axios";
 axios.defaults.baseURL = "http://localhost:3001";
-
-function createData(
-  plate: string,
-  eco_number: string,
-  vim: string,
-  seats: number,
-  sec: string,
-  sec_number: string,
-  brand: string,
-  model: string,
-  year: number,
-  color: string
-) {
-  return {
-    plate,
-    eco_number,
-    vim,
-    seats,
-    sec,
-    sec_number,
-    brand,
-    model,
-    year,
-    color,
-  };
-}
+import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function VehicleTable() {
   let [vehicles, setVehicles] = React.useState([]);
@@ -67,7 +44,27 @@ export default function VehicleTable() {
   // Call fetchData on component mount
   React.useEffect(() => {
     fetchData();
+
+    EventBus.on("getVehicles", (data: any) => {
+      fetchData();
+    });
   }, []);
+
+  const removeVehicle = async (row: any) => {
+    try {
+      await axios
+        .delete("/vehicles/" + row._id)
+        .then(function (response) {
+          console.log(response);
+          setVehicles(vehicles.filter((post:any) => post._id !== row._id));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const setVehicle = (vehicle: any) => {
     EventBus.dispatch("couponApply", { vehicle });
@@ -119,6 +116,9 @@ export default function VehicleTable() {
             <TableRow
               sx={{ backgroundColor: "#D0DF00 !important", fontWeight: "bold" }}
             >
+              <TableCell className="bold"></TableCell>
+              <TableCell className="bold"></TableCell>
+
               <TableCell className="bold">Placa</TableCell>
               <TableCell className="bold" align="left">
                 Número económico
@@ -156,7 +156,7 @@ export default function VehicleTable() {
                   page * rowsPerPage + rowsPerPage
                 )
               : vehicles
-            ).map((row:any, index) => (
+            ).map((row: any, index) => (
               <TableRow
                 key={index}
                 sx={{
@@ -165,6 +165,12 @@ export default function VehicleTable() {
                 }}
                 onClick={() => setVehicle(row)}
               >
+                <TableCell>
+                <DeleteIcon onClick={() => removeVehicle(row)}/>
+                </TableCell>
+                <TableCell>
+                <EditIcon onClick={() => removeVehicle(row)}/>
+                </TableCell>
                 <TableCell>{row.plate}</TableCell>
                 <TableCell align="center">{row.eco_number}</TableCell>
                 <TableCell align="center">{row.vim}</TableCell>
