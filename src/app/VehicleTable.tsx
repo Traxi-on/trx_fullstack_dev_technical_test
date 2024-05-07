@@ -16,7 +16,7 @@ import {
 import EventBus from "./EventBus";
 import VehicleDialog from "./VehicleDialog";
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.baseURL = "https://traxi-api.onrender.com";
 import { AccessAlarm, ThreeDRotation } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";

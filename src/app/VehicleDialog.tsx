@@ -10,7 +10,7 @@ import { Grid } from "@mui/material";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import EventBus from "./EventBus";
-axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.baseURL = "https://traxi-api.onrender.com";
 
 export default function VehicleDialog() {
   const [update, setUpdate] = React.useState(false);
