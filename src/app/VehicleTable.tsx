@@ -30,12 +30,10 @@ export default function VehicleTable() {
       await axios
         .get("/vehicles")
         .then(function (response) {
-          console.log(response);
           setVehicles(response.data);
           setFilterVehicles(response.data)
         })
         .catch(function (error) {
-          console.log(error);
         });
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -56,11 +54,9 @@ export default function VehicleTable() {
       await axios
         .delete("/vehicles/" + row._id)
         .then(function (response) {
-          console.log(response);
           setVehicles(vehicles.filter((post: any) => post._id !== row._id));
         })
         .catch(function (error) {
-          console.log(error);
         });
     } catch (error) {
       console.error("Error fetching data:", error);

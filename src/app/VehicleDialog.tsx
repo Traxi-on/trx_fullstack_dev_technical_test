@@ -32,7 +32,6 @@ export default function VehicleDialog() {
       handleClickOpen();
       setUpdate(true);
 
-      console.log("row update", data.row);
       setId(data.row._id);
       setButtonText("Actualizar");
       setValue("plate", data.row.plate);
@@ -51,29 +50,26 @@ export default function VehicleDialog() {
   }, []);
 
   const onSubmit = (data: any) => {
-    console.log("data", data);
     // call create vehicle api
     if (update) {
       axios
         .put("/vehicles/" + id, data)
         .then(function (response) {
-          console.log(response);
           reset();
           handleClose();
         })
         .catch(function (error) {
-          console.log(error);
+          
         });
     } else {
       axios
         .post("/vehicles", data)
         .then(function (response) {
-          console.log(response);
           reset();
           handleClose();
         })
         .catch(function (error) {
-          console.log(error);
+          
         });
     }
   };
